@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0e0d0d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,10 +24,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+
+  flex-direction: column;
 }
 
 h1 {
@@ -53,6 +51,14 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+#root {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  gap: 50px;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -65,4 +71,53 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ///////////////////  NAVBAR STYLES //////////////// */
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+  font-size: 1.5rem;
+}
+
+/* //////// HOME PAGE STYLES*/
+@font-face {
+  font-family: sora;
+  src: url("../assets/Sora/static/Sora-SemiBold.ttf");
+}
+.homepage {
+  padding-top: 200px;
+  font-family: sora, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.homepage main {
+  max-width: 700px;
+}
+/* //////// SHOP STYLES*/
+.shop-container {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.products {
+  display: grid;
+  padding-top: 100px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: 400px;
+  grid-auto-rows: 400px;
+  width: 100%;
+  justify-items: center;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
