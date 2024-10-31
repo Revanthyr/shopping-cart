@@ -42,12 +42,27 @@ export default function Product({ cart, setCart, name, price, img }) {
             } else {
               setValidationError(false);
               if (cart !== undefined) {
-                const newCart = [...cart];
-                newCart.push(inputValue);
+                if (cart.filter((curr) => curr.name === name).length !== 0) {
+                  const newCart = [...cart];
+                  // trouver l'index,
+                  // augmenter la quantité
+                  let index = cart.indexOf(
+                    cart.filter((curr) => curr.name === name)[0]
+                  );
+                  newCart[index].quantity += parseInt(inputValue);
+                  setCart(newCart);
+                } else {
+                  const newCart = [...cart];
+                  newCart.push(
+                    createCartItem(name, img, price, parseInt(inputValue))
+                  );
 
-                setCart(newCart);
+                  setCart(newCart);
+                }
               } else {
-                const newCart = [inputValue];
+                const newCart = [
+                  createCartItem(name, img, price, parseInt(inputValue)),
+                ];
                 setCart(newCart);
               }
             }
@@ -76,3 +91,6 @@ Product.propTypes = {
   price: PropTypes.number,
   img: PropTypes.string,
 };
+function createCartItem(name, img, price, quantity) {
+  return { name, img, price, quantity, id: crypto.randomUUID() };
+}

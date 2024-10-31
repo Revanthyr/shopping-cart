@@ -44,7 +44,3 @@ describe("Product component", () => {
     expect(priceDOM).toBeInTheDocument();
   });
 });
-
-// test that cart, given an array, displays the elements of that array
-// test that given an array, the cart will show how many elements there are
-// tset that given an array, the cart will show total cost
