@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, getByRole } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Product from "../src/Product";
 import userEvent from "@testing-library/user-event";
 
@@ -21,28 +21,30 @@ describe("Product component", () => {
     await user.click(screen.getByRole("button", { name: "+" }));
     expect(screen.getByRole("spinbutton").value).toBe("2");
   });
-  it("- button works", async () => {
-    render(<Product />);
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button"));
 
-    await user.click(screen.getByRole("button", { name: "-" }));
-    expect(screen.getByRole("spinbutton").value).toBe("0");
-  });
   it("doesnt go below 0", async () => {
     render(<Product />);
     const user = userEvent.setup();
     await user.click(screen.getByRole("button"));
+    const input = screen.getByRole("spinbutton");
+    await user.click(screen.getByRole("button", { name: "-" }));
 
-    await user.click(screen.getByRole("button", { name: "-" }));
-    await user.click(screen.getByRole("button", { name: "-" }));
-    await user.click(screen.getByRole("button", { name: "-" }));
-    expect(screen.getByRole("spinbutton").value).toBe("0");
+    expect(input).not.toBeInTheDocument();
+  });
+  it("shows given data", async () => {
+    const image = "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg";
+    const name = "t-shirt";
+    const price = "4.99";
+    render(<Product image={image} name={name} price={price} />);
+    const imageDOM = screen.getByRole("img");
+    const nameDOM = screen.getByText("t-shirt");
+    const priceDOM = screen.getByText("4.99$");
+    expect(imageDOM).toBeInTheDocument();
+    expect(nameDOM).toBeInTheDocument();
+    expect(priceDOM).toBeInTheDocument();
   });
 });
 
-// test that clicking buy adds an array somewhere
 // test that cart, given an array, displays the elements of that array
 // test that given an array, the cart will show how many elements there are
 // tset that given an array, the cart will show total cost
-// test api calls

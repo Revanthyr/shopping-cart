@@ -1,20 +1,23 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Product() {
+export default function Product({ cart, setCart, name, price, img }) {
   const [inputIsShown, setInputIsShown] = useState(false);
   const [inputValue, setInputValue] = useState(1);
+  const [validationError, setValidationError] = useState(false);
 
   if (inputIsShown) {
     return (
       <div className="product">
-        <img src="" alt="some picture" />
-        <p>Some Product</p>
+        <img src={img} alt="some picture" />
+        <p>{name}</p>
+        <p>{price}$</p>
         <div className="buy-input">
           <button
             onClick={() => {
-              inputValue > 0
+              inputValue > 1
                 ? setInputValue(inputValue - 1)
-                : setInputValue(inputValue);
+                : setInputIsShown(false);
             }}
           >
             -
@@ -32,16 +35,44 @@ export default function Product() {
             +
           </button>
         </div>
-        <button>Add to Cart</button>
+        <button
+          onClick={() => {
+            if (isNaN(parseInt(inputValue))) {
+              setValidationError(true);
+            } else {
+              setValidationError(false);
+              if (cart !== undefined) {
+                const newCart = [...cart];
+                newCart.push(inputValue);
+
+                setCart(newCart);
+              } else {
+                const newCart = [inputValue];
+                setCart(newCart);
+              }
+            }
+          }}
+        >
+          Add to Cart
+        </button>
+        {validationError && <div>Only numbers are allowed!</div>}
       </div>
     );
   }
 
   return (
     <div className="product">
-      <img src="" alt="some picture" />
-      <p>Some Product</p>
+      <img src={img} alt="some picture" />
+      <p>{name}</p>
+      <p>{price}$</p>
       <button onClick={() => setInputIsShown(true)}>Buy Now</button>
     </div>
   );
 }
+Product.propTypes = {
+  cart: PropTypes.array,
+  setCart: PropTypes.func,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  img: PropTypes.string,
+};

@@ -120,4 +120,23 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
+}
+img {
+  max-height: 45%;
+  object-fit: contain;
+}
+p {
+  margin: 0px;
+}
+
+.product p {
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; /* Don't forget this one */
+  text-overflow: ellipsis;
+}
+.buy-input {
+  align-self: center;
 }
